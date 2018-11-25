@@ -21,20 +21,20 @@ git clone --depth=1 https://git.dev.tencent.com/felixonmars/dnsmasq-china-list.g
 
 echo "Removing old configurations..."
 for _conf in "${CONF_WITH_SERVERS[@]}" "${CONF_SIMPLE[@]}"; do
-  rm -f /etc/dnsmasq.d/"$_conf"*.conf
+  rm -f /usr/⁨local⁩/⁨etc⁩/⁨dnsmasq.d⁩/"$_conf"*.conf
 done
 
 echo "Installing new configurations..."
 for _conf in "${CONF_SIMPLE[@]}"; do
-  cp "$WORKDIR/$_conf.conf" "/etc/dnsmasq.d/$_conf.conf"
+  cp "$WORKDIR/$_conf.conf" "/usr/⁨local⁩/⁨etc⁩/⁨dnsmasq.d⁩/$_conf.conf"
 done
 
 for _server in "${SERVERS[@]}"; do
   for _conf in "${CONF_WITH_SERVERS[@]}"; do
-    cp "$WORKDIR/$_conf.conf" "/etc/dnsmasq.d/$_conf.$_server.conf"
+    cp "$WORKDIR/$_conf.conf" "/usr/⁨local⁩/⁨etc⁩/⁨dnsmasq.d⁩/$_conf.$_server.conf"
   done
 
-  sed -i "s|^\(server.*\)/[^/]*$|\1/$_server|" /etc/dnsmasq.d/*."$_server".conf
+  sed -i "s|^\(server.*\)/[^/]*$|\1/$_server|" /usr/⁨local⁩/⁨etc⁩/⁨dnsmasq.d⁩/*."$_server".conf
 done
 
 echo "Restarting dnsmasq service..."
